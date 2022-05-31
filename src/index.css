@@ -45,7 +45,7 @@ form {
   justify-content: space-between;
   width: 21rem;
   height: 31rem;
-  transition: .3s;
+  transition: 0.3s;
 }
 
 @keyframes sizing {
@@ -163,4 +163,8 @@ input {
   text-decoration: none;
   color: #4b8cec;
   cursor: pointer;
+  border: none;
+  outline: none;
+  padding: 3px;
+  background-color: transparent;
 }

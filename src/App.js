@@ -1,20 +1,16 @@
-import React from "react";
-import Register from "./components/Register";
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  HashRouter,
-} from "react-router-dom";
+import React, { useContext } from 'react';
+import { LoadingContext } from './components/GlobalDataProvider';
+import Loading from './components/Loading';
+import Register from './containers/Register';
 
 const App = () => {
+  const { isLoading } = useContext(LoadingContext);
+
   return (
-    <HashRouter>
-      <Routes>
-        <Route path="/" element={<Register />} />
-        <Route path="/signup" element={<Register />} />
-      </Routes>
-    </HashRouter>
+    <>
+      {isLoading && <Loading />}
+      <Register />
+    </>
   );
 };
 

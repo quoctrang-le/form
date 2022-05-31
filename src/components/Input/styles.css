@@ -1,0 +1,11 @@
+input {
+  border: 2px solid transparent;
+  outline: none;
+  color: #342f45;
+  border-radius: 15px;
+  padding: 0 30px;
+  height: 4rem;
+  position: relative;
+  transition: 0.2s;
+  padding-right: 50px;
+}

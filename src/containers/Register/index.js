@@ -1,14 +1,16 @@
-import React from "react";
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import React from 'react';
+import { useState } from 'react';
+import Button from '../../components/Button';
+import Input from '../../components/Input';
 const Register = () => {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [email, setEmail] = useState('');
   const [iconPw, setIconPw] = useState(false);
   const [iconPwCf, setIconPwCf] = useState(false);
   const [isMember, setIsMember] = useState(false);
+  const [submit, setSubmit] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -16,8 +18,8 @@ const Register = () => {
 
   const handleEmpty = (e) => {
     if (!e.target.value) {
-      e.target.className = "current";
-      e.target.placeholder = "This field must be done!";
+      e.target.className = 'current';
+      e.target.placeholder = 'This field must be done!';
     }
   };
 
@@ -30,11 +32,10 @@ const Register = () => {
         </div>
 
         {isMember ? (
-          <form style={{ height: "20rem" }} onSubmit={(e) => handleSubmit(e)}>
+          <form style={{ height: '20rem' }} onSubmit={(e) => handleSubmit(e)}>
             <div className="input__wrapper">
-              <input
+              <Input
                 required="required"
-                name="username"
                 type="text"
                 onBlur={(e) => {
                   handleEmpty(e);
@@ -42,8 +43,8 @@ const Register = () => {
                 }}
                 placeholder="Username"
                 onFocus={(e) => {
-                  e.target.classList.remove("current");
-                  setUsername("");
+                  e.target.classList.remove('current');
+                  setUsername('');
                 }}
               />
               {username.length < 6 && username.length > 0 && (
@@ -53,9 +54,9 @@ const Register = () => {
               )}
             </div>
             <div className="input__wrapper">
-              <input
+              <Input
                 required="required"
-                type={iconPwCf ? "text" : "password"}
+                type={iconPwCf ? 'text' : 'password'}
                 onBlur={(e) => {
                   handleEmpty(e);
                 }}
@@ -65,7 +66,7 @@ const Register = () => {
               <i
                 onClick={() => setIconPwCf((prev) => !prev)}
                 className={
-                  iconPwCf ? "fa-solid fa-eye" : "fa-solid fa-eye-slash"
+                  iconPwCf ? 'fa-solid fa-eye' : 'fa-solid fa-eye-slash'
                 }
               ></i>
             </div>
@@ -76,9 +77,8 @@ const Register = () => {
         ) : (
           <form onSubmit={(e) => handleSubmit(e)}>
             <div className="input__wrapper">
-              <input
+              <Input
                 required="required"
-                name="username"
                 type="text"
                 onBlur={(e) => {
                   handleEmpty(e);
@@ -86,8 +86,8 @@ const Register = () => {
                 }}
                 placeholder="Username"
                 onFocus={(e) => {
-                  e.target.classList.remove("current");
-                  setUsername("");
+                  e.target.classList.remove('current');
+                  setUsername('');
                 }}
               />
               {username.length < 6 && username.length > 0 && (
@@ -97,63 +97,63 @@ const Register = () => {
               )}
             </div>
             <div className="input__wrapper">
-              <input
+              <Input
                 required="required"
-                type={iconPwCf ? "text" : "password"}
+                type={iconPwCf ? 'text' : 'password'}
                 onBlur={(e) => {
                   handleEmpty(e);
                   setPassword(e.target.value);
                 }}
                 placeholder="Password"
                 onFocus={(e) => {
-                  e.target.classList.remove("current");
-                  setPassword("");
+                  e.target.classList.remove('current');
+                  setPassword('');
                 }}
               />
 
               <i
                 onClick={() => setIconPwCf((prev) => !prev)}
                 className={
-                  iconPwCf ? "fa-solid fa-eye" : "fa-solid fa-eye-slash"
+                  iconPwCf ? 'fa-solid fa-eye' : 'fa-solid fa-eye-slash'
                 }
               ></i>
               {!password.match(
                 /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/
               ) &&
                 password.length > 0 && (
-                  <span className="error" style={{ bottom: "-51%" }}>
+                  <span className="error" style={{ bottom: '-51%' }}>
                     *Password must containing at least 8 characters, 1 number, 1
                     upper and 1 lowercase
                   </span>
                 )}
             </div>
             <div className="input__wrapper">
-              <input
+              <Input
                 required="required"
-                type={iconPw ? "text" : "password"}
+                type={iconPw ? 'text' : 'password'}
                 onBlur={(e) => {
                   handleEmpty(e);
                   setConfirmPassword(e.target.value);
                 }}
                 placeholder="Confirm password"
                 onFocus={(e) => {
-                  e.target.classList.remove("current");
-                  setConfirmPassword("");
+                  e.target.classList.remove('current');
+                  setConfirmPassword('');
                 }}
               />
               <i
                 onClick={() => setIconPw((prev) => !prev)}
-                className={iconPw ? "fa-solid fa-eye" : "fa-solid fa-eye-slash"}
+                className={iconPw ? 'fa-solid fa-eye' : 'fa-solid fa-eye-slash'}
               ></i>
 
-              {!confirmPassword !== password && confirmPassword.length > 0 && (
-                <span className="error">*Password does not match</span>
-              )}
+              {!confirmPassword.match(password) &&
+                confirmPassword.length > 0 && (
+                  <span className="error">*Password does not match</span>
+                )}
             </div>
             <div className="input__wrapper">
-              <input
+              <Input
                 required="required"
-                name="email"
                 onBlur={(e) => {
                   handleEmpty(e);
                   setEmail(e.target.value);
@@ -161,10 +161,11 @@ const Register = () => {
                 type="text"
                 placeholder="Email"
                 onFocus={(e) => {
-                  e.target.classList.remove("current");
-                  setEmail("");
+                  e.target.classList.remove('current');
+                  setEmail('');
                 }}
               />
+
               {!email
                 .toLowerCase()
                 .match(
@@ -174,9 +175,7 @@ const Register = () => {
                   <span className="error">*Invalid email address</span>
                 )}
             </div>
-            <button className="btn" type="submit">
-              Register
-            </button>
+            <Button submit={submit} text={'Register'} />
           </form>
         )}
 
@@ -186,16 +185,16 @@ const Register = () => {
           <div></div>
         </div>
         <h1 className="signin">
-          {isMember ? "Not a member? " : "Already a member? "}
-          <Link
+          {isMember ? 'Not a member? ' : 'Already a member? '}
+          <button
             onClick={() => {
               setIsMember((prev) => !prev);
             }}
             className="link"
-            to="/"
+            href="/"
           >
-            {isMember ? "Sign up" : "Login"}
-          </Link>
+            {isMember ? 'Sign up' : 'Login'}
+          </button>
         </h1>
       </div>
       <div className="circle1 circle"></div>
