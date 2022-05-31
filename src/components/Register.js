@@ -53,7 +53,7 @@ const Register = () => {
               )}
             </div>
             <div className="input__wrapper">
-            <input
+              <input
                 required="required"
                 type={iconPwCf ? "text" : "password"}
                 onBlur={(e) => {
