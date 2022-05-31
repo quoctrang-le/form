@@ -53,28 +53,21 @@ const Register = () => {
               )}
             </div>
             <div className="input__wrapper">
-              <input
+            <input
                 required="required"
-                type="password"
+                type={iconPwCf ? "text" : "password"}
                 onBlur={(e) => {
                   handleEmpty(e);
-                  setPassword(e.target.value);
                 }}
                 placeholder="Password"
-                onFocus={(e) => {
-                  e.target.classList.remove("current");
-                  setPassword("");
-                }}
               />
-              {!password.match(
-                /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/
-              ) &&
-                password.length > 0 && (
-                  <span className="error" style={{ bottom: "-51%" }}>
-                    *Password must containing at least 8 characters, 1 number, 1
-                    upper and 1 lowercase
-                  </span>
-                )}
+
+              <i
+                onClick={() => setIconPwCf((prev) => !prev)}
+                className={
+                  iconPwCf ? "fa-solid fa-eye" : "fa-solid fa-eye-slash"
+                }
+              ></i>
             </div>
             <button className="btn" type="submit">
               Login

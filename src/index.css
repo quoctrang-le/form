@@ -45,7 +45,7 @@ form {
   justify-content: space-between;
   width: 21rem;
   height: 31rem;
-  animation: sizing 2s infinite;
+  transition: .3s;
 }
 
 @keyframes sizing {
