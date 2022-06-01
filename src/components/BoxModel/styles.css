@@ -1,0 +1,33 @@
+.bModel {
+  z-index: 2;
+  position: absolute;
+  left: 0;
+  top: 0;
+  background-color: white;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 0;
+  overflow: hidden;
+}
+
+.bModel img {
+  height: 50%;
+}
+.boxModel img {
+  height: 50%;
+}
+
+.boxModel {
+  animation: boxModelAnimation 0.2s forwards;
+}
+
+@keyframes boxModelAnimation {
+  from {
+    height: 0;
+  }
+  to {
+    height: 100vh;
+  }
+}

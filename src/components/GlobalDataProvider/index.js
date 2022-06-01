@@ -6,17 +6,20 @@ const LoadingContext = createContext();
 
 function GlobalDataProvider({ children }) {
   const [isLoading, setIsLoading] = useState(false);
-  isLoading && setTimeout(() => setIsLoading(false), 2000);
 
-  const register = async () => {
+  const Register = async () => {
     const data = await userApi.register();
-    return data;
+    data && setIsLoading(false);
+    data && document.querySelector('.bModel').classList.add('boxModel');
+    setTimeout(() => {
+      document.querySelector('.bModel').classList.remove('boxModel');
+    }, 2000);
   };
 
   const valueProvider = {
     isLoading,
     setIsLoading,
-    register,
+    Register,
   };
 
   return (

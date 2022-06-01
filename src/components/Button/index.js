@@ -2,15 +2,9 @@ import React, { useContext } from 'react';
 import { LoadingContext } from '../GlobalDataProvider';
 import './styles.css';
 
-const Button = ({ text, submit }) => {
-  const { setIsLoading, register } = useContext(LoadingContext);
+const Button = ({ text, submit, handleClick }) => {
   return (
-    <button
-      onClick={() => {
-        setIsLoading(true);
-      }}
-      disabled={submit}
-    >
+    <button onClick={handleClick} disabled={submit}>
       {text}
     </button>
   );

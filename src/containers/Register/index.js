@@ -1,8 +1,14 @@
 import React from 'react';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
+import { LoadingContext } from '../../components';
 import Button from '../../components/Button';
 import Input from '../../components/Input';
 const Register = () => {
+  const [usernameError, setUsernameError] = useState('');
+  const [passwordError, setPasswordError] = useState('');
+  const [confirmPasswordError, setConfirmPasswordError] = useState('');
+  const [emailError, setEmailError] = useState('');
+
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -11,6 +17,12 @@ const Register = () => {
   const [iconPwCf, setIconPwCf] = useState(false);
   const [isMember, setIsMember] = useState(false);
   const [submit, setSubmit] = useState(false);
+  const { isLoading, setIsLoading, Register } = useContext(LoadingContext);
+
+  const handleClick = () => {
+    setIsLoading(true);
+    Register();
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -20,6 +32,9 @@ const Register = () => {
     if (!e.target.value) {
       e.target.className = 'current';
       e.target.placeholder = 'This field must be done!';
+      e.target.classList.add('error__placeholder');
+    } else {
+      e.target.classList.remove('error__placeholder');
     }
   };
 
@@ -42,8 +57,7 @@ const Register = () => {
                   setUsername(e.target.value);
                 }}
                 placeholder="Username"
-                onFocus={(e) => {
-                  e.target.classList.remove('current');
+                onFocus={() => {
                   setUsername('');
                 }}
               />
@@ -175,7 +189,11 @@ const Register = () => {
                   <span className="error">*Invalid email address</span>
                 )}
             </div>
-            <Button submit={submit} text={'Register'} />
+            <Button
+              handleClick={handleClick}
+              submit={submit}
+              text={'Register'}
+            />
           </form>
         )}
 

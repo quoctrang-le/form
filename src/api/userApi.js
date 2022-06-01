@@ -3,10 +3,9 @@ const userApi = {
     return new Promise((resolve) => {
       setTimeout(() => {
         resolve({
-          firstName: 'Binh',
-          lastName: 'Tran',
+          status: '200',
         });
-      }, 1000);
+      }, 1500);
     });
   },
 };

@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import BoxModel from './components/BoxModel';
 import { LoadingContext } from './components/GlobalDataProvider';
 import Loading from './components/Loading';
 import Register from './containers/Register';
@@ -10,6 +11,7 @@ const App = () => {
     <>
       {isLoading && <Loading />}
       <Register />
+      <BoxModel />
     </>
   );
 };
