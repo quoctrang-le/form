@@ -16,12 +16,15 @@ const Register = () => {
   const [iconPw, setIconPw] = useState(false);
   const [iconPwCf, setIconPwCf] = useState(false);
   const [isMember, setIsMember] = useState(false);
-  const [submit, setSubmit] = useState(false);
-  const { isLoading, setIsLoading, Register } = useContext(LoadingContext);
+  const { setIsLoading, Register } = useContext(LoadingContext);
+  const [isEveryThingOke, setIsEveryThingOke] = useState(false)
 
   const handleClick = () => {
-    setIsLoading(true);
-    Register();
+    if (isEveryThingOke) {
+      setIsLoading(true);
+      Register();
+      setTimeout(() => setIsMember(true), 3000)
+    }
   };
 
   const handleSubmit = (e) => {
@@ -62,6 +65,9 @@ const Register = () => {
                 }}
               />
               {username.length < 6 && username.length > 0 && (
+                setUsernameError('*username must longer than 8 characters')
+              )}
+              {username.length < 6 && username.length > 0 && (
                 <span className="error">
                   *username must longer than 8 characters
                 </span>
@@ -96,19 +102,22 @@ const Register = () => {
                 type="text"
                 onBlur={(e) => {
                   handleEmpty(e);
-                  setUsername(e.target.value);
+                  if (username.length < 8) {
+                    setUsernameError('Username must longer than 8 characters')
+                  } else {
+                    setUsernameError('')
+
+                  }
                 }}
                 placeholder="Username"
                 onFocus={(e) => {
                   e.target.classList.remove('current');
                   setUsername('');
                 }}
+                onChange={(e) => setUsername(e.target.value)}
+
               />
-              {username.length < 6 && username.length > 0 && (
-                <span className="error">
-                  *username must longer than 8 characters
-                </span>
-              )}
+              <span className='error'>{usernameError}</span>
             </div>
             <div className="input__wrapper">
               <Input
@@ -116,13 +125,17 @@ const Register = () => {
                 type={iconPwCf ? 'text' : 'password'}
                 onBlur={(e) => {
                   handleEmpty(e);
-                  setPassword(e.target.value);
+                  if (!password.match(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/)) {
+                    setPasswordError('*Password must containing at least 8 characters, 1 number, 1upper and 1 lowercase')
+                  } else {
+                    setPasswordError('')
+                  }
                 }}
                 placeholder="Password"
                 onFocus={(e) => {
                   e.target.classList.remove('current');
-                  setPassword('');
                 }}
+                onChange={e => setPassword(e.target.value)}
               />
 
               <i
@@ -131,15 +144,7 @@ const Register = () => {
                   iconPwCf ? 'fa-solid fa-eye' : 'fa-solid fa-eye-slash'
                 }
               ></i>
-              {!password.match(
-                /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/
-              ) &&
-                password.length > 0 && (
-                  <span className="error" style={{ bottom: '-51%' }}>
-                    *Password must containing at least 8 characters, 1 number, 1
-                    upper and 1 lowercase
-                  </span>
-                )}
+              <span style={{ bottom: '-50%' }} className='error'>{passwordError}</span>
             </div>
             <div className="input__wrapper">
               <Input
@@ -147,51 +152,56 @@ const Register = () => {
                 type={iconPw ? 'text' : 'password'}
                 onBlur={(e) => {
                   handleEmpty(e);
-                  setConfirmPassword(e.target.value);
+                  if (!confirmPassword.match(password)) {
+                    setConfirmPasswordError('Password does not match')
+                  } else {
+                    setConfirmPasswordError('')
+                  }
                 }}
                 placeholder="Confirm password"
                 onFocus={(e) => {
                   e.target.classList.remove('current');
                   setConfirmPassword('');
                 }}
+                onChange={(e) => setConfirmPassword(e.target.value)}
               />
               <i
                 onClick={() => setIconPw((prev) => !prev)}
                 className={iconPw ? 'fa-solid fa-eye' : 'fa-solid fa-eye-slash'}
               ></i>
 
-              {!confirmPassword.match(password) &&
-                confirmPassword.length > 0 && (
-                  <span className="error">*Password does not match</span>
-                )}
+              <span className="error">{confirmPasswordError}</span>
             </div>
             <div className="input__wrapper">
               <Input
                 required="required"
                 onBlur={(e) => {
                   handleEmpty(e);
-                  setEmail(e.target.value);
-                }}
+                  if (!email
+                    .toLowerCase()
+                    .match(
+                      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+                    )) {
+                    setEmailError("Invalid email")
+                  } else {
+                    setEmailError('')
+                    setIsEveryThingOke(true)
+                  }
+                }
+                }
                 type="text"
                 placeholder="Email"
                 onFocus={(e) => {
                   e.target.classList.remove('current');
                   setEmail('');
                 }}
+                onChange={e => setEmail(e.target.value)}
               />
 
-              {!email
-                .toLowerCase()
-                .match(
-                  /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-                ) &&
-                email.length > 0 && (
-                  <span className="error">*Invalid email address</span>
-                )}
+              <span className="error">{emailError}</span>
             </div>
             <Button
               handleClick={handleClick}
-              submit={submit}
               text={'Register'}
             />
           </form>

@@ -1,10 +1,9 @@
-import React, { useContext } from 'react';
-import { LoadingContext } from '../GlobalDataProvider';
+import React from 'react';
 import './styles.css';
 
-const Button = ({ text, submit, handleClick }) => {
+const Button = ({ text, handleClick }) => {
   return (
-    <button onClick={handleClick} disabled={submit}>
+    <button onMouseEnter={() => console.log('click')} onClick={handleClick} >
       {text}
     </button>
   );

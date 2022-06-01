@@ -1,7 +1,7 @@
 import React from 'react';
 import './styles.css';
 
-const Input = ({ placeholder, icon, onFocus, onBlur, required, type }) => {
+const Input = ({ placeholder, icon, onFocus, onBlur, required, type, onChange }) => {
   return (
     <div>
       <input
@@ -10,6 +10,7 @@ const Input = ({ placeholder, icon, onFocus, onBlur, required, type }) => {
         onFocus={onFocus}
         onBlur={onBlur}
         placeholder={placeholder}
+        onChange={onChange}
       />
       {icon}
     </div>
