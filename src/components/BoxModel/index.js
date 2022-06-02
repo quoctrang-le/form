@@ -5,7 +5,7 @@ import boxModel from '../../assets/images/boxModel.gif';
 const BoxModel = () => {
   return (
     <div className="bModel">
-      <img src={boxModel} alt="box model image" />
+      <img src={boxModel} alt="box model " />
     </div>
   );
 };
