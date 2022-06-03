@@ -1,9 +1,8 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { LoadingContext } from "../../components";
+import { Loading, LoadingContext } from "../../components";
 import Input from "../../components/Input";
-import userApi from "../../api/userApi";
 const Login = () => {
   const [usernameError, setUsernameError] = useState("");
   const [passwordError, setPasswordError] = useState("");
@@ -11,19 +10,16 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [iconPwCf, setIconPwCf] = useState(false);
   const [isMember, setIsMember] = useState(false);
-  const { setIsLoading, Register } = useContext(LoadingContext);
-  const [isEveryThingOke, setIsEveryThingOke] = useState(false);
-  const handleClick = () => {
-    if (isEveryThingOke) {
-      setIsLoading(true);
-      Register();
-      setTimeout(() => setIsMember(true), 3000);
-    }
-  };
-
+  const { setIsLoading, isLoading, getLoginInfo, setRoles } =
+    useContext(LoadingContext);
   const navigate = useNavigate();
-  const handleSubmit = (e) => {
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
+    const data = await getLoginInfo(username, password);
+    localStorage.setItem("roles", data.type);
+    data && navigate("/dashboard");
   };
 
   const handleEmpty = (e) => {
@@ -35,9 +31,9 @@ const Login = () => {
       e.target.classList.remove("error__placeholder");
     }
   };
-
   return (
     <section className="container">
+      {isLoading && <Loading />}
       <div style={{ minHeight: "65vh" }} className="form__wrapper">
         <div className="title">
           <h1>Hello Again</h1>
@@ -53,8 +49,8 @@ const Login = () => {
               type="text"
               onBlur={(e) => {
                 handleEmpty(e);
-                if (username.length < 8) {
-                  setUsernameError("Username must longer than 8 characters");
+                if (username.length < 5) {
+                  setUsernameError("Username must longer than 5 characters");
                 } else {
                   setUsernameError("");
                 }
@@ -92,7 +88,6 @@ const Login = () => {
               }}
               onChange={(e) => setPassword(e.target.value)}
             />
-
             <i
               onClick={() => setIconPwCf((prev) => !prev)}
               className={iconPwCf ? "fa-solid fa-eye" : "fa-solid fa-eye-slash"}

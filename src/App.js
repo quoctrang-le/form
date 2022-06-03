@@ -23,16 +23,27 @@
 
 // export default App;
 
-import React from "react";
+import React, { useContext } from "react";
 import { Routes, Route } from "react-router-dom";
-import { Dashboard, Login } from "./screens";
-
+import { LoadingContext } from "./components";
+import { Dashboard, Login, Settings } from "./screens";
 const App = () => {
+  const { rules } = useContext(LoadingContext);
+
   return (
     <Routes>
       <Route path="/" element={<Login />} />
       <Route path="/dashboard" element={<Dashboard />} />
-      <Route path="/settings" element={<h1>Settings</h1>} />
+      <Route
+        path="/settings"
+        element={
+          localStorage.getItem("roles") === "admin" ? (
+            <Settings />
+          ) : (
+            <h1>404</h1>
+          )
+        }
+      />
       <Route path="/register" element={<h1>Register</h1>} />
     </Routes>
   );

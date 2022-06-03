@@ -8,6 +8,7 @@ function GlobalDataProvider({ children }) {
   const [isLoading, setIsLoading] = useState(false);
   const [isUser, setIsUser] = useState(false); // check whether login is a user
   const [token, setToken] = useState("");
+  const [roles, setRoles] = useState("");
   const Register = async () => {
     const data = await userApi.register();
     data && setIsLoading(false);
@@ -17,6 +18,12 @@ function GlobalDataProvider({ children }) {
     }, 2000);
   };
 
+  const getLoginInfo = async (username, password) => {
+    const data = await userApi.login(username, password);
+    data && setIsLoading(false);
+    return data;
+  };
+
   const valueProvider = {
     isLoading,
     setIsLoading,
@@ -24,6 +31,9 @@ function GlobalDataProvider({ children }) {
     isUser,
     setToken,
     token,
+    getLoginInfo,
+    roles,
+    setRoles,
   };
 
   return (
