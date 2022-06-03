@@ -59,17 +59,39 @@ const Dashboard = () => {
           </Link>
         )}
       </h1>
+      <h1
+        style={{
+          textAlign: "center",
+          left: "0",
+          width: "100vw",
+        }}
+      >
+        {localStorage.getItem("roles") === "admin" && (
+          <Link
+            style={{
+              textShadow: "0 0 20px lightblue, 0 0 25px blue",
+              letterSpacing: "5px",
+              textDecoration: "none",
+              cursor: "pointer",
+            }}
+            to="/animals"
+          >
+            Manage Animals
+          </Link>
+        )}
+      </h1>
       <p
         style={{
           position: "absolute",
           left: "50%",
-          top: "50%",
+          top: "60%",
           transform: "translate(-50%, -50%)",
-          fontSize: "20rem",
+          fontSize: "10rem",
           fontWeight: "900",
           color: "white",
           letterSpacing: "20px",
           textShadow: "0 0 20px lightcoral, 0 0 25px lightgreen",
+          zIndex: "-1",
         }}
       >
         Hi
