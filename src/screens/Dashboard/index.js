@@ -1,9 +1,7 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
-import { LoadingContext } from "../../components";
 
 const Dashboard = () => {
-  const { roles } = useContext(LoadingContext);
   return (
     <div style={{ width: "100vh", height: "100vh", color: "white" }}>
       <ul>
