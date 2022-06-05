@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Routes, Route } from "react-router-dom";
 import { Dashboard, Login, Settings, Animals } from "./screens";
 const App = () => {
@@ -22,6 +22,7 @@ const App = () => {
           localStorage.getItem("roles") === "admin" ? <Animals /> : <h1>404</h1>
         }
       />
+
       <Route path="/register" element={<h1>Register</h1>} />
     </Routes>
   );

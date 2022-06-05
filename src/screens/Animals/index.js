@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import api from "../../api/animals.js";
 import { Table, Button, Space, Modal } from "antd";
 import moment from "moment";
+import { Link } from "react-router-dom";
 const Animals = () => {
   const [animals, setAnimals] = useState();
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -10,7 +11,7 @@ const Animals = () => {
   const [name, setName] = useState("");
   const [type, setType] = useState("");
   const [age, setAge] = useState("");
-  const [animal, setAnimal] = useState();
+  const [animal, setAnimal] = useState({});
   let createdAt = new Date();
   createdAt = moment(createdAt).format("DD/MM/YYYY");
 
@@ -25,7 +26,7 @@ const Animals = () => {
 
   const getAnimal = async (id) => {
     const { data } = await api.get(`/animals/${id}`);
-    data && setAnimal(data);
+    setAnimal(data);
   };
 
   const createAnimal = async (animal) => {
@@ -37,11 +38,16 @@ const Animals = () => {
   const updateAnimal = async (animal) => {
     const newAnimal = {
       createdAt,
-      name,
-      age,
-      type,
+      name: name ? name : animal.name,
+      age: age ? age : animal.age,
+      type: type ? type : animal.type,
     };
     await api.put(`/animals/${animal.id}`, newAnimal);
+    setAnimals(
+      animals.map((item) => {
+        return item.id === animal.id ? { ...newAnimal } : item;
+      })
+    );
   };
 
   const showModal = () => {
@@ -104,6 +110,7 @@ const Animals = () => {
               setId(id);
               setAction("delete");
             }}
+            danger
           >
             Delete
           </Button>
@@ -114,6 +121,8 @@ const Animals = () => {
               setAction("update");
               getAnimal(id);
             }}
+            type="primary"
+            ghost
           >
             Update
           </Button>
@@ -141,12 +150,30 @@ const Animals = () => {
 
   return (
     <>
+      <Link to="/dashboard">
+        <h1
+          style={{
+            textAlign: "center",
+            letterSpacing: "3px",
+            color: "white",
+            textShadow: "5px 5px 15px lightcoral, 5px 5px 15px lightblue",
+          }}
+        >
+          Back to dashboard
+        </h1>
+      </Link>
       <Button
         onClick={() => {
           setIsModalVisible(true);
           setAction("create");
         }}
-        style={{ margin: "2rem 5rem" }}
+        style={{
+          margin: "2rem 5rem",
+          border: "1px solid lightgreen",
+          color: "lightgreen",
+        }}
+        size="large"
+        type="ghost"
       >
         Create
       </Button>
