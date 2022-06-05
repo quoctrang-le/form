@@ -62,6 +62,9 @@ const Animals = () => {
     const result = animals.filter((animal) => animal.id !== id);
     setAnimals(result);
   };
+  const handleOkView = () => {
+    setIsModalVisible(false);
+  };
 
   const handleOkeCreate = () => {
     createAnimal({
@@ -125,6 +128,18 @@ const Animals = () => {
             ghost
           >
             Update
+          </Button>
+          <Button
+            onClick={() => {
+              showModal();
+              setId(id);
+              setAction("view");
+              getAnimal(id);
+            }}
+            type="primary"
+            ghost
+          >
+            View
           </Button>
         </Space>
       ),
@@ -192,6 +207,7 @@ const Animals = () => {
           <h1>Xoá nha</h1>
         </Modal>
       )}
+
       {action === "update" && animal && (
         <Modal
           title="Update"
@@ -224,6 +240,47 @@ const Animals = () => {
             }}
             defaultValue={animal.age}
             onChange={(e) => setAge(e.target.value)}
+          />
+        </Modal>
+      )}
+      {action === "view" && animal && (
+        <Modal
+          title="View"
+          visible={isModalVisible}
+          onOk={handleOkView}
+          onCancel={handleCancel}
+        >
+          <input
+            className="name"
+            style={{ width: "70%", boxShadow: "0 1px 5px 0 #666" }}
+            defaultValue={animal.name}
+          />
+          <input
+            className="type"
+            style={{
+              width: "70%",
+              boxShadow: "0 1px 5px 0 #666",
+              marginTop: "1rem",
+            }}
+            defaultValue={animal.type}
+          />
+          <input
+            className="type"
+            style={{
+              width: "70%",
+              boxShadow: "0 1px 5px 0 #666",
+              marginTop: "1rem",
+            }}
+            defaultValue={animal.createdAt}
+          />
+          <input
+            className="age"
+            style={{
+              width: "70%",
+              boxShadow: "0 1px 5px 0 #666",
+              marginTop: "1rem",
+            }}
+            defaultValue={animal.age}
           />
         </Modal>
       )}
